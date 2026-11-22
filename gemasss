@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f8f3ec" />
+  <meta name="description" content="A little adventure, a lot of love — our date plan to Curug." />
+  <title>Our Date Plan – Adventure to Curug</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --cream: #f8f3ec;
+      --paper: #fffdf9;
+      --pink: #e8a9ad;
+      --pink-dark: #bd747d;
+      --sage: #8d9c7d;
+      --sage-light: #e8ecdf;
+      --brown: #66544a;
+      --ink: #38332f;
+      --muted: #857b73;
+      --line: #e8dfd5;
+      --shadow: 0 18px 50px rgba(76, 57, 48, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: "Poppins", sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    button { font: inherit; }
+    .serif { font-family: "Playfair Display", serif; }
+    .section { padding: 88px 20px; }
+    .container { width: min(100%, 980px); margin: 0 auto; }
+    .eyebrow {
+      color: var(--pink-dark);
+      font-size: .73rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    .section-heading {
+      margin: 8px 0 12px;
+      font: 500 clamp(2rem, 6vw, 3.2rem)/1.15 "Playfair Display", serif;
+    }
+    .section-intro { max-width: 560px; margin: 0 auto; color: var(--muted); }
+    .center { text-align: center; }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      display: grid;
+      min-height: 100svh;
+      overflow: hidden;
+      place-items: center;
+      padding: 36px 20px;
+      color: white;
+      text-align: center;
+      background:
+        linear-gradient(180deg, rgba(28, 35, 29, .35), rgba(31, 31, 27, .61)),
+        url("https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=2200&q=85")
+        center 48% / cover no-repeat;
+    }
+    .hero::after {
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(255,255,255,.35);
+      content: "";
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 720px; animation: rise .9s ease both; }
+    .hero-kicker { margin: 0 0 10px; letter-spacing: .24em; text-transform: uppercase; font-size: .72rem; }
+    .hero h1 {
+      margin: 0;
+      font: 500 clamp(3.2rem, 11vw, 7rem)/1.02 "Playfair Display", serif;
+      text-shadow: 0 4px 24px rgba(0,0,0,.2);
+    }
+    .hero-subtitle { margin: 16px 0 24px; font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 300; }
+    .hero-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 12px;
+      padding: 9px 16px;
+      border: 1px solid rgba(255,255,255,.55);
+      border-radius: 999px;
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(7px);
+      font-size: .88rem;
+    }
+    .hero-note { margin: 0 0 28px; font-size: .85rem; opacity: .9; }
+    .open-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 23px;
+      color: #493a36;
+      background: #fff8f1;
+      box-shadow: 0 10px 28px rgba(0,0,0,.2);
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+    .open-button:hover { transform: translateY(-3px); background: white; }
+    .floaty {
+      position: absolute;
+      z-index: 1;
+      color: rgba(255,255,255,.65);
+      animation: float 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .floaty.one { top: 17%; left: 12%; animation-delay: -2s; }
+    .floaty.two { top: 27%; right: 12%; animation-delay: -4s; }
+    .floaty.three { bottom: 17%; left: 18%; animation-delay: -1s; }
+
+    /* Main sections */
+    .main-content { display: none; }
+    .main-content.opened { display: block; animation: reveal .8s ease both; }
+    .letter-wrap { padding-top: 78px; }
+    .letter {
+      position: relative;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: clamp(28px, 6vw, 58px);
+      border: 1px solid #efe4d9;
+      border-radius: 8px 28px 8px 28px;
+      background:
+        radial-gradient(ellipse at 100% 0, rgba(232,169,173,.14), transparent 38%),
+        var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .letter::before {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      color: var(--pink);
+      font-size: 1.4rem;
+      content: "♡";
+    }
+    .letter p { margin: 0 0 16px; }
+    .letter .signoff { margin: 22px 0 0; color: var(--pink-dark); font: italic 1.25rem "Playfair Display", serif; }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 30px auto 0;
+    }
+    .countdown-unit {
+      min-width: 70px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,253,249,.7);
+    }
+    .countdown-unit strong { display: block; font: 600 1.4rem "Playfair Display", serif; }
+    .countdown-unit span { color: var(--muted); font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; }
+
+    /* Timeline */
+    .timeline-section { background: #f1eee5; }
+    .timeline {
+      position: relative;
+      max-width: 760px;
+      margin: 48px auto 0;
+      padding: 0;
+      list-style: none;
+    }
+    .timeline::before {
+      position: absolute;
+      top: 22px;
+      bottom: 22px;
+      left: 25px;
+      width: 2px;
+      background: var(--line);
+      content: "";
+    }
+    .timeline-progress {
+      position: absolute;
+      top: 22px;
+      left: 25px;
+      width: 2px;
+      height: 0;
+      background: var(--sage);
+      transition: height .25s ease-out;
+      z-index: 1;
+    }
+    .timeline-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 18px;
+      margin: 0 0 22px;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateY(0); }
+    .timeline-icon {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      width: 52px;
+      height: 52px;
+      place-items: center;
+      border: 1px solid #dfe4d6;
+      border-radius: 50%;
+      color: #66745b;
+      background: var(--sage-light);
+    }
+    .timeline-card {
+      padding: 19px 22px;
+      border: 1px solid #eee6dc;
+      border-radius: 17px;
+      background: var(--paper);
+      box-shadow: 0 8px 24px rgba(76,57,48,.045);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .timeline-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .time { color: var(--pink-dark); font-size: .75rem; font-weight: 600; letter-spacing: .09em; }
+    .timeline-card h3 { margin: 3px 0 5px; font: 500 1.3rem "Playfair Display", serif; }
+    .timeline-card p { margin: 0; color: var(--muted); font-size: .88rem; }
+
+    /* Dress code */
+    .dress-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 690px; margin: 38px auto 0; }
+    .dress-card {
+      padding: 26px 18px;
+      border: 1px solid #eee4da;
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: 0 10px 30px rgba(76,57,48,.06);
+      text-align: center;
+    }
+    .dress-card h3 { margin: 0; font: 600 1.1rem "Playfair Display", serif; }
+    .dress-card p { min-height: 48px; margin: 8px 0 14px; color: var(--muted); font-size: .84rem; }
+    .jacket {
+      position: relative;
+      width: 100px;
+      height: 105px;
+      margin: 4px auto 14px;
+      clip-path: polygon(27% 0, 40% 8%, 50% 11%, 60% 8%, 73% 0, 100% 21%, 86% 45%, 77% 38%, 80% 100%, 20% 100%, 23% 38%, 14% 45%, 0 21%);
+      background: #b7c4a4;
+      filter: drop-shadow(0 6px 6px rgba(0,0,0,.12));
+    }
+    .jacket::after {
+      position: absolute;
+      top: 10px;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: rgba(255,255,255,.45);
+      content: "";
+    }
+    .jacket.black { background: #292a2b; }
+    .jacket.black::after { background: rgba(255,255,255,.19); }
+    .matching { margin: 25px 0 0; color: var(--pink-dark); font: italic 1.35rem "Playfair Display", serif; }
+
+    /* Checklist */
+    .checklist-section { background: #e9ede4; }
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      max-width: 720px;
+      margin: 34px auto 0;
+      padding: 0;
+      list-style: none;
+    }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 58px;
+      padding: 13px 15px;
+      border: 1px solid rgba(141,156,125,.22);
+      border-radius: 14px;
+      background: rgba(255,253,249,.83);
+      cursor: pointer;
+      transition: background .2s, transform .2s, opacity .2s;
+    }
+    .check-item:hover { transform: translateY(-2px); }
+    .check-item input { width: 18px; height: 18px; accent-color: var(--sage); cursor: pointer; }
+    .check-item.checked span { color: #8b9384; text-decoration: line-through; }
+    .required-tag {
+      margin-left: auto;
+      color: var(--pink-dark);
+      font-size: .63rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+    }
+    .check-progress { max-width: 720px; margin: 16px auto 0; color: #66745b; font-size: .8rem; text-align: right; }
+
+    /* Closing */
+    .closing {
+      position: relative;
+      overflow: hidden;
+      padding: 78px 20px;
+      color: white;
+      background: #66745b;
+      text-align: center;
+    }
+    .closing .section-heading { max-width: 680px; margin: 0 auto 13px; }
+    .closing p { margin: 0; color: rgba(255,255,255,.82); }
+    .closing-heart { display: inline-block; margin-bottom: 10px; color: #f3c6c5; animation: heartbeat 1.8s infinite; }
+    footer { padding: 18px; color: var(--muted); background: var(--cream); text-align: center; font-size: .72rem; }
+
+    @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes reveal { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-18px) rotate(8deg); } }
+    @keyframes heartbeat { 0%,100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.12); } }
+    @media (max-width: 560px) {
+      .section { padding: 68px 18px; }
+      .timeline { margin-top: 34px; }
+      .timeline-item { grid-template-columns: 43px 1fr; gap: 12px; }
+      .timeline::before, .timeline-progress { left: 20px; }
+      .timeline-icon { width: 42px; height: 42px; }
+      .timeline-card { padding: 16px; }
+      .timeline-card h3 { font-size: 1.15rem; }
+      .timeline-card p { font-size: .82rem; }
+      .dress-grid { gap: 10px; }
+      .dress-card { padding: 21px 10px; }
+      .dress-card p { font-size: .77rem; }
+      .checklist { grid-template-columns: 1fr; }
+      .countdown { gap: 7px; }
+      .countdown-unit { min-width: 62px; padding: 8px; }
+      .hero::after { inset: 9px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero" id="home">
+    <i class="floaty one" data-lucide="heart" aria-hidden="true"></i>
+    <i class="floaty two" data-lucide="leaf" aria-hidden="true"></i>
+    <i class="floaty three" data-lucide="heart" aria-hidden="true"></i>
+
+    <div class="hero-content">
+      <p class="hero-kicker">A little invitation for you</p>
+      <h1>Our Date Plan</h1>
+      <p class="hero-subtitle">A Little Adventure, A Lot of Love</p>
+      <div class="hero-date"><i data-lucide="calendar-days"></i> Kamis, 12 November 2026</div>
+      <p class="hero-note">A special day with my favorite person ❤️</p>
+      <button class="open-button" id="openPlan" type="button">
+        Open Our Date Plan <i data-lucide="mail-heart"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-content" id="datePlan">
+    <section class="section letter-wrap">
+      <div class="container center">
+        <span class="eyebrow">A little note for you</span>
+        <h2 class="section-heading">A Letter From Me</h2>
+        <article class="letter" style="text-align:left">
+          <p>Hai sayanggg! ❤️</p>
+          <p>Ini dia rundown date kita nanti. Jangan sampai ada yang kelewat yaa, hehe!</p>
+          <p>Aku sudah menyiapkan hari spesial untuk kita. Semoga perjalanan ini dipenuhi cerita lucu, kebahagiaan, foto-foto cantik, dan kenangan yang akan selalu kita ingat.</p>
+          <p>Let's make this day unforgettable, sayang! 🥰</p>
+          <p class="signoff">With love, always ♡</p>
+        </article>
+        <div class="countdown" id="countdown" aria-label="Hitung mundur menuju hari date">
+          <div class="countdown-unit"><strong id="days">—</strong><span>Days</span></div>
+          <div class="countdown-unit"><strong id="hours">—</strong><span>Hours</span></div>
+          <div class="countdown-unit"><strong id="minutes">—</strong><span>Minutes</span></div>
+          <div class="countdown-unit"><strong id="seconds">—</strong><span>Seconds</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section timeline-section">
+      <div class="container">
+        <div class="center">
+          <span class="eyebrow">Our little adventure</span>
+          <h2 class="section-heading">The Date Timeline</h2>
+          <p class="section-intro">Satu hari, banyak cerita, dan orang favoritku di setiap momennya.</p>
+        </div>
+        <ol class="timeline" id="timeline">
+          <div class="timeline-progress" id="timelineProgress"></div>
+          <li class="timeline-item">
+            <div class="timeline-icon"><i data-lucide="heart-handshake"></i></div>
+            <article class="timeline-card"><span class="time">08.00</span><h3>Penjemputan Sayang</h3><p>Aku datang menjemput kamu. Jadi, jangan sampai telat siap-siapnya yaa, hehe.</p></article>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-icon"><i data-lucide="navigation"></i></div>
+            <article class="timeline-card"><span class="time">08.15</span><h3>OTW ke PH</h3><p>Kita mulai perjalanan sambil ngobrol, bercanda, dan menikmati perjalanan berdua.</p></article>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-icon"><i data-lucide="footprints"></i></div>
+            <article class="timeline-card"><span class="time">09.15</span><h3>Trekking Time!</h3><p>Mulai petualangan menuju curug. Jangan lupa saling tunggu dan saling jaga ya, sayang.</p></article>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-icon"><i data-lucide="waves"></i></div>
+            <article class="timeline-card"><span class="time">10.00</span><h3>Enjoy the Waterfall</h3><p>Menikmati keindahan curug, main air, foto-foto, dan mengabadikan momen berdua.</p></article>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-icon"><i data-lucide="utensils"></i></div>
+            <article class="timeline-card"><span class="time">11.30</span><h3>Makan-Makan di Curug</h3><p>Waktunya istirahat, makan bersama, ngobrol santai, dan menikmati suasana alam.</p></article>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-icon"><i data-lucide="backpack"></i></div>
+            <article class="timeline-card"><span class="time">13.00</span><h3>Persiapan Pulang</h3><p>Beres-beres dan bersiap meninggalkan curug.</p></article>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-icon"><i data-lucide="map"></i></div>
+            <article class="timeline-card"><span class="time">14.00</span><h3>Keliling Kota</h3><p>Perjalanan pulang sambil berkeliling kota, menikmati suasana, dan mampir kalau ada tempat menarik.</p></article>
+          </li>
+          <li class="timeline-item">
+            <div class="timeline-icon"><i data-lucide="house-heart"></i></div>
+            <article class="timeline-card"><span class="time">16.00</span><h3>Sweet Ending</h3><p>Mengakhiri date kita dan mengantar kamu pulang dengan selamat. ❤️</p></article>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container center">
+        <span class="eyebrow">Comfy & cute</span>
+        <h2 class="section-heading">Couple Dress Code 👕</h2>
+        <p class="section-intro">Biar makin serasi waktu jalan-jalan dan foto berdua.</p>
+        <div class="dress-grid">
+          <article class="dress-card">
+            <div class="jacket" aria-label="Ilustrasi jaket warna sage"></div>
+            <h3>FOR YOU 💗</h3>
+            <p>Pakai jaket aku ya, sayang!</p>
+          </article>
+          <article class="dress-card">
+            <div class="jacket black" aria-label="Ilustrasi jaket hitam"></div>
+            <h3>FOR ME 🖤</h3>
+            <p>Aku pakai jaket hitam.</p>
+          </article>
+        </div>
+        <p class="matching">“Matching outfits, matching hearts.”</p>
+      </div>
+    </section>
+
+    <section class="section checklist-section">
+      <div class="container">
+        <div class="center">
+          <span class="eyebrow">A little preparation</span>
+          <h2 class="section-heading">Checklist Barang Bawaan 🎒</h2>
+          <p class="section-intro">Centang kalau sudah masuk tas, ya. Checklist tersimpan di browser ini.</p>
+        </div>
+        <ul class="checklist" id="checklist">
+          <li><label class="check-item"><input type="checkbox" data-item="jas-hujan"><span>Jas hujan ☔</span><b class="required-tag">WAJIB!</b></label></li>
+          <li><label class="check-item"><input type="checkbox" data-item="baju-ganti"><span>Baju ganti</span></label></li>
+          <li><label class="check-item"><input type="checkbox" data-item="handuk"><span>Handuk kecil</span></label></li>
+          <li><label class="check-item"><input type="checkbox" data-item="alas-kaki"><span>Sandal / alas kaki nyaman</span></label></li>
+          <li><label class="check-item"><input type="checkbox" data-item="air-minum"><span>Air minum</span></label></li>
+          <li><label class="check-item"><input type="checkbox" data-item="snack"><span>Snack dan bekal</span></label></li>
+          <li><label class="check-item"><input type="checkbox" data-item="sunblock"><span>Sunblock</span></label></li>
+          <li><label class="check-item"><input type="checkbox" data-item="ponsel"><span>Ponsel & power bank</span></label></li>
+          <li><label class="check-item"><input type="checkbox" data-item="plastik"><span>Kantong untuk baju basah</span></label></li>
+          <li><label class="check-item"><input type="checkbox" data-item="obat"><span>Obat pribadi</span></label></li>
+        </ul>
+        <p class="check-progress" id="checkProgress" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="closing-heart"><i data-lucide="heart"></i></div>
+      <h2 class="section-heading serif">Can't wait to make memories with you.</h2>
+      <p>See you on our little adventure, sayang. ❤️</p>
+    </section>
+  </main>
+
+  <footer>Made with love, just for us ♡ · 12 November 2026</footer>
+
+  <script>
+    lucide.createIcons();
+
+    const openButton = document.getElementById("openPlan");
+    const plan = document.getElementById("datePlan");
+
+    openButton.addEventListener("click", () => {
+      plan.classList.add("opened");
+      window.setTimeout(() => plan.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
+    });
+
+    // Reveal itinerary cards as they enter the viewport.
+    const timelineItems = document.querySelectorAll(".timeline-item");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    timelineItems.forEach((item) => observer.observe(item));
+
+    // Animate the timeline connector based on page scroll.
+    const timeline = document.getElementById("timeline");
+    const progress = document.getElementById("timelineProgress");
+
+    function updateTimelineProgress() {
+      const rect = timeline.getBoundingClientRect();
+      const viewportMiddle = window.innerHeight * 0.62;
+      const progressHeight = Math.max(0, Math.min(rect.height, viewportMiddle - rect.top));
+      progress.style.height = `${progressHeight}px`;
+    }
+
+    window.addEventListener("scroll", updateTimelineProgress, { passive: true });
+    window.addEventListener("resize", updateTimelineProgress);
+    updateTimelineProgress();
+
+    // Countdown to the date (using the visitor's local time zone).
+    const dateTarget = new Date(2026, 10, 12, 8, 0, 0);
+
+    function updateCountdown() {
+      const remaining = dateTarget.getTime() - Date.now();
+      if (remaining <= 0) {
+        document.getElementById("countdown").innerHTML =
+          '<p class="section-intro">Today is our special day! Have the loveliest adventure ❤️</p>';
+        return;
+      }
+
+      const day = Math.floor(remaining / 86400000);
+      const hour = Math.floor((remaining % 86400000) / 3600000);
+      const minute = Math.floor((remaining % 3600000) / 60000);
+      const second = Math.floor((remaining % 60000) / 1000);
+
+      document.getElementById("days").textContent = day;
+      document.getElementById("hours").textContent = String(hour).padStart(2, "0");
+      document.getElementById("minutes").textContent = String(minute).padStart(2, "0");
+      document.getElementById("seconds").textContent = String(second).padStart(2, "0");
+    }
+    updateCountdown();
+    window.setInterval(updateCountdown, 1000);
+
+    // Keep checklist state in this browser.
+    const checkboxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+    const storageKey = "our-date-plan-checklist-v1";
+
+    function readChecklist() {
+      try { return JSON.parse(localStorage.getItem(storageKey) || "{}"); }
+      catch { return {}; }
+    }
+
+    function updateChecklist() {
+      const state = readChecklist();
+      let checkedCount = 0;
+
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = Boolean(state[checkbox.dataset.item]);
+        checkbox.closest(".check-item").classList.toggle("checked", checkbox.checked);
+        if (checkbox.checked) checkedCount++;
+      });
+
+      document.getElementById("checkProgress").textContent =
+        `${checkedCount} dari ${checkboxes.length} barang sudah siap`;
+    }
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", () => {
+        const state = readChecklist();
+        state[checkbox.dataset.item] = checkbox.checked;
+        localStorage.setItem(storageKey, JSON.stringify(state));
+        updateChecklist();
+      });
+    });
+
+    updateChecklist();
+  </script>
+</body>
+</html>
